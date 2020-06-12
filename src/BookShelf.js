@@ -6,7 +6,7 @@ class BookShelf extends Component {
 
     render() {
 
-        const { title, books } = this.props;
+        const { title, books, updateBookStatus } = this.props;
 
         return (
             <div className="bookshelf">
@@ -15,7 +15,7 @@ class BookShelf extends Component {
                     <ol className="books-grid">
                         {books.map((book)=>
                             <li key={book.id}>
-                                <BookCard  book={book} ></BookCard>
+                                <BookCard  book={book}  updateBookStatus={(event) => updateBookStatus(event)}></BookCard>
                             </li>
                         )}
                     </ol>
@@ -29,7 +29,8 @@ class BookShelf extends Component {
 
 BookShelf.propTypes = {
     title: PropTypes.string.isRequired,
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
+    updateBookStatus: PropTypes.func.isRequired
 }
 
 export default BookShelf;

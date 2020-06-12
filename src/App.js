@@ -48,9 +48,16 @@ class BooksApp extends React.Component {
     this.setState({currentlyReading, wantToRead, read});
   }
 
+  updateBookStatus = (event) => {
+    const { book, shelf } = event;
+
+    BooksAPI.update(book, shelf).then(() =>{
+        this.getBooks();
+      });
+  }
 
   render() {
-    
+
     return (
       <div className="app">
         <Route exact path='/' 
@@ -58,7 +65,9 @@ class BooksApp extends React.Component {
             <Dashboard 
               currentlyReading={this.state.currentlyReading} 
               wantToRead={this.state.wantToRead} 
-              read={this.state.read}>
+              read={this.state.read}
+              updateBookStatus={(event) => this.updateBookStatus(event)}
+              >
             </Dashboard> 
           }
         />

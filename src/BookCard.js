@@ -5,14 +5,15 @@ class BookCard extends Component {
 
     render() {
 
-      const { title, authors, imageLinks } = this.props.book;
+      const { book, updateBookStatus } = this.props;
+      const { title, authors, imageLinks } = book;
 
         return (
           <div className="book">
             <div className="book-top">
               <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url('${imageLinks.thumbnail}')` }}></div>
               <div className="book-shelf-changer">
-                <select>
+                <select onChange={(event) => updateBookStatus({shelf: event.target.value,book: book})}>
                   <option value="move" disabled>Move to...</option>
                   <option value="currentlyReading">Currently Reading</option>
                   <option value="wantToRead">Want to Read</option>
@@ -29,7 +30,8 @@ class BookCard extends Component {
 }
 
 BookCard.propTypes = {
-  book:  PropTypes.object.isRequired
+  book:  PropTypes.object.isRequired,
+  updateBookStatus: PropTypes.func.isRequired
 };
 
 export default BookCard;
