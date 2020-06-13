@@ -44,9 +44,17 @@ class SearchBooks extends Component {
 
     render() {
       
-      const { updateBookStatus } = this.props;
+      const { updateBookStatus, allBooksInShelf } = this.props;
       const { searchTerm, foundBooks, loading } = this.state;
 
+      foundBooks.map((foundBook)=> {
+        const bookInShelf = allBooksInShelf.find((bookInShelf)=> bookInShelf.id === foundBook.id);
+        if(bookInShelf) { 
+          foundBook.shelf = bookInShelf.shelf;
+        }
+        return foundBook;
+      })
+        
         return (
             <div className="search-books">
             <div className="search-books-bar">
@@ -81,7 +89,8 @@ class SearchBooks extends Component {
 }
 
 SearchBooks.propTypes = {
-  updateBookStatus: PropTypes.func.isRequired
+  updateBookStatus: PropTypes.func.isRequired,
+  allBooksInShelf: PropTypes.array.isRequired
 }
 
 export default SearchBooks;

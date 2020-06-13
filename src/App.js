@@ -9,6 +9,7 @@ import NotFound from './NotFound';
 class BooksApp extends React.Component {
 
   state = {
+    allBooksInShelf: [],
     currentlyReading: [],
     wantToRead: [],
     read: [],
@@ -28,6 +29,7 @@ class BooksApp extends React.Component {
   }
 
   addBooksToState = (books) => {
+    const allBooksInShelf = books;
     const currentlyReading = [];
     const wantToRead = [];
     const read = [];
@@ -48,7 +50,7 @@ class BooksApp extends React.Component {
         }
     });
 
-    this.setState({currentlyReading, wantToRead, read});
+    this.setState({currentlyReading, wantToRead, read, allBooksInShelf});
   }
 
   updateBookStatus = (event) => {
@@ -67,17 +69,19 @@ class BooksApp extends React.Component {
 
   render() {
 
+    const { currentlyReading, wantToRead, read, loading, allBooksInShelf } = this.state;
+
     return (
       <div className="app">
         <Switch>
           <Route exact path='/' 
             render={ ()=> 
               <Dashboard 
-                currentlyReading={this.state.currentlyReading} 
-                wantToRead={this.state.wantToRead} 
-                read={this.state.read}
+                currentlyReading={currentlyReading} 
+                wantToRead={wantToRead} 
+                read={read}
                 updateBookStatus={(event) => this.updateBookStatus(event)}
-                loading={this.state.loading}
+                loading={loading}
                 >
               </Dashboard> 
             }
@@ -85,6 +89,7 @@ class BooksApp extends React.Component {
           <Route path='/search' 
             render={()=> 
               <SearchBooks
+                allBooksInShelf={allBooksInShelf}
                 updateBookStatus={(event) => this.updateBookStatus(event)}>
               </SearchBooks> } />
           <Route path='*' component={NotFound}/>
