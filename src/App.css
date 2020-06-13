@@ -47,6 +47,22 @@ body, .app {
   text-align: center;
 }
 
+/* loading */
+
+.bookshelf-loading {
+  display: flex;
+  justify-content: center;
+}
+
+.bookshelf-loader {
+  width: 140px;
+  height: 140px;
+  background-image: url('./images/loading.gif');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+}
+
 .open-search {
   position: fixed;
   right: 25px;

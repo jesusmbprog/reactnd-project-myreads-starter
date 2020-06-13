@@ -7,7 +7,7 @@ class DashBoard extends Component {
 
     render() {
 
-      const { currentlyReading, wantToRead, read, updateBookStatus } = this.props;
+      const { currentlyReading, wantToRead, read, updateBookStatus, loading } = this.props;
 
         return (
             <div className="list-books">
@@ -16,9 +16,9 @@ class DashBoard extends Component {
             </div>
             <div className="list-books-content">
               <div>
-                <BookShelf title={'Currently Reading'} books={currentlyReading} updateBookStatus={(event) => updateBookStatus(event)}></BookShelf>
-                <BookShelf title={'Want to Read'} books={wantToRead} updateBookStatus={(event) => updateBookStatus(event)}></BookShelf>
-                <BookShelf title={'Read'} books={read} updateBookStatus={(event) => updateBookStatus(event)}></BookShelf>
+                <BookShelf title={'Currently Reading'} books={currentlyReading} updateBookStatus={(event) => updateBookStatus(event)} loading={loading}></BookShelf>
+                <BookShelf title={'Want to Read'} books={wantToRead} updateBookStatus={(event) => updateBookStatus(event)} loading={loading}></BookShelf>
+                <BookShelf title={'Read'} books={read} updateBookStatus={(event) => updateBookStatus(event)} loading={loading}></BookShelf>
               </div>
             </div>
             <Link to='/search'>
@@ -37,7 +37,8 @@ DashBoard.propTypes = {
   currentlyReading: PropTypes.array.isRequired,
   wantToRead: PropTypes.array.isRequired,
   read: PropTypes.array.isRequired,
-  updateBookStatus: PropTypes.func.isRequired
+  updateBookStatus: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired
 }
 
 export default DashBoard;

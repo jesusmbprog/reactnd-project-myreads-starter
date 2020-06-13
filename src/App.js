@@ -10,7 +10,8 @@ class BooksApp extends React.Component {
   state = {
     currentlyReading: [],
     wantToRead: [],
-    read: []
+    read: [],
+    loading: false
   }
 
   componentDidMount() {
@@ -18,9 +19,11 @@ class BooksApp extends React.Component {
   }
 
   getBooks() {
+    this.updateLoadingStatus(true);
     BooksAPI.getAll().then(books => {
       console.log('books: ', books);
       this.addBooksToState(books);
+      this.updateLoadingStatus(false);
     });
   }
 
@@ -51,9 +54,15 @@ class BooksApp extends React.Component {
   updateBookStatus = (event) => {
     const { book, shelf } = event;
 
+    this.updateLoadingStatus(true);
     BooksAPI.update(book, shelf).then(() =>{
+        this.updateLoadingStatus(false);
         this.getBooks();
       });
+  }
+
+  updateLoadingStatus = (value) => {
+    this.setState({loading: value})
   }
 
   render() {
@@ -67,6 +76,7 @@ class BooksApp extends React.Component {
               wantToRead={this.state.wantToRead} 
               read={this.state.read}
               updateBookStatus={(event) => this.updateBookStatus(event)}
+              loading={this.state.loading}
               >
             </Dashboard> 
           }

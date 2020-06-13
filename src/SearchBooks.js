@@ -9,7 +9,8 @@ class SearchBooks extends Component {
 
     state = {
       searchTerm: '',
-      foundBooks: []
+      foundBooks: [],
+      loading: false
     }
 
     onChangeInput = (query) => {
@@ -25,6 +26,7 @@ class SearchBooks extends Component {
 
     searchFromAPI = (query) =>{
       if(query !== ''){
+        this.updateLoadingStatus(true);
         BooksAPI.search(query).then((res)=>{
           console.log('res: ', res);
           if(!res.error){
@@ -32,14 +34,19 @@ class SearchBooks extends Component {
           } else{
             this.setState({foundBooks: []})
           }
+          this.updateLoadingStatus(false);
         })
       }
+    }
+
+    updateLoadingStatus = (value) => {
+      this.setState({loading: value})
     }
 
     render() {
       
       const { updateBookStatus } = this.props;
-      const { searchTerm, foundBooks } = this.state;
+      const { searchTerm, foundBooks, loading } = this.state;
 
         return (
             <div className="search-books">
@@ -55,13 +62,18 @@ class SearchBooks extends Component {
               </div>
             </div>
             <div className="search-books-results">
-              <ol className="books-grid">
-                {foundBooks.map((book)=>
-                    <li key={book.id}>
-                        <BookCard  book={book}  updateBookStatus={(event) => updateBookStatus(event)}></BookCard>
-                    </li>
-                )}
-              </ol>
+              { loading 
+              ? <div className="bookshelf-loading">
+                  <div className="bookshelf-loader"></div>
+                </div>
+              : <ol className="books-grid">
+                  {foundBooks && foundBooks.map((book)=>
+                      <li key={book.id}>
+                          <BookCard  book={book}  updateBookStatus={(event) => updateBookStatus(event)}></BookCard>
+                      </li>
+                  )}
+                </ol>
+              }
             </div>
           </div>
         )
