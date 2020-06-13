@@ -28,7 +28,6 @@ class SearchBooks extends Component {
       if(query !== ''){
         this.updateLoadingStatus(true);
         BooksAPI.search(query).then((res)=>{
-          console.log('res: ', res);
           if(!res.error){
             this.setState({foundBooks: res})
           } else{
@@ -51,7 +50,7 @@ class SearchBooks extends Component {
         return (
             <div className="search-books">
             <div className="search-books-bar">
-              <Link to='/' className="close-search">Close</Link>
+              <Link to="/" className="close-search">Close</Link>
               <div className="search-books-input-wrapper">
                 <form>
                 <input type="text" placeholder="Search by title or author"

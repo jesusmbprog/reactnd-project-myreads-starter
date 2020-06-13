@@ -213,3 +213,8 @@ button:active {
   text-align: center;
   font-size: 0.8em;
 }
+
+.not-found{
+  display: flex;
+  justify-content: center;
+}
